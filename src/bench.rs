@@ -121,7 +121,7 @@ where
 {
     //case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
     //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
-    //case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
+    case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
     case::<PapayaTable<u64, H>>("Papaya", options, h);
     case::<PinnedPapayaTable<u64, H>>("Papaya Pinned", options, h);
     //case::<FlurryTable<u64, H>>("Flurry", options, h);
