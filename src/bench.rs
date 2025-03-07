@@ -40,6 +40,8 @@ pub struct Options {
     pub csv: bool,
     #[structopt(long)]
     pub csv_no_headers: bool,
+    #[structopt(long)]
+    pub max_threads: Option<usize>,
 }
 
 fn gc_cycle(options: &Options) {
@@ -71,7 +73,10 @@ where
     }
 
     let gen_threads = || {
-        let n = num_cpus::get();
+        let mut n = num_cpus::get();
+        if let Some(max) = options.max_threads {
+            n = max;
+        }
 
         match n {
             0..=10 => (1..=n as u32).collect(),
@@ -101,12 +106,12 @@ where
 fn run(options: &Options, h: &mut Handler) {
     //case::<StdRwLockBTreeMapTable<u64>>("std:sync::RwLock<BTreeMap>", options, h);
     //case::<ParkingLotRwLockBTreeMapTable<u64>>("parking_lot::RwLock<BTreeMap>", options, h);
-    case::<CHashMapTable<u64>>("CHashMap", options, h);
-    case::<CrossbeamSkipMapTable<u64>>("CrossbeamSkipMap", options, h);
+    //case::<CHashMapTable<u64>>("CHashMap", options, h);
+    //case::<CrossbeamSkipMapTable<u64>>("CrossbeamSkipMap", options, h);
 
     match options.hasher {
         HasherKind::Std => run_hasher_variant::<RandomState>(options, h),
-        HasherKind::AHash => run_hasher_variant::<ahash::RandomState>(options, h),
+        HasherKind::AHash => run_hasher_variant::<foldhash::fast::RandomState>(options, h),
     }
 }
 
@@ -117,10 +122,11 @@ where
     //case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
     //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
     case::<DashMapTable<u64, H>>("DashMap", options, h);
-    case::<FlurryTable<u64, H>>("Flurry", options, h);
-    case::<EvmapTable<u64, H>>("Evmap", options, h);
-    case::<ContrieTable<u64, H>>("Contrie", options, h);
-    case::<SccMapTable<u64, H>>("SccMap", options, h);
+    case::<PapayaTable<u64, H>>("Papaya", options, h);
+    //case::<FlurryTable<u64, H>>("Flurry", options, h);
+    //case::<EvmapTable<u64, H>>("Evmap", options, h);
+    //case::<ContrieTable<u64, H>>("Contrie", options, h);
+    //case::<SccMapTable<u64, H>>("SccMap", options, h);
 }
 
 pub fn bench(options: &Options) {
