@@ -1,15 +1,13 @@
+#![allow(unused_imports)]
+
 pub use self::{
-    btreemap::ParkingLotRwLockBTreeMapTable, btreemap::StdRwLockBTreeMapTable,
-    chashmap::CHashMapTable, contrie::ContrieTable, crossbeam_skiplist::CrossbeamSkipMapTable,
+    contrie::ContrieTable,
     dashmap::DashMapTable, evmap::EvmapTable, flurry::FlurryTable, papaya::PapayaTable,
     papaya::PinnedPapayaTable, scc::SccMapTable, std::ParkingLotRwLockStdHashMapTable,
     std::StdRwLockStdHashMapTable,
 };
 
-mod btreemap;
-mod chashmap;
 mod contrie;
-mod crossbeam_skiplist;
 mod dashmap;
 mod evmap;
 mod flurry;

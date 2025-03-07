@@ -4,8 +4,6 @@ use std::sync::Arc;
 
 use super::Value;
 
-const BATCH_SIZE: usize = 2000;
-
 #[derive(Clone)]
 pub struct FlurryTable<K: 'static, H: 'static>(Arc<flurry::HashMap<K, Value, H>>);
 

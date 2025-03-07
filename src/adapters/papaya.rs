@@ -5,7 +5,7 @@ use std::sync::Arc;
 
 use super::Value;
 
-const BATCH_SIZE: usize = 2000;
+const BATCH_SIZE: usize = 128;
 
 #[derive(Clone)]
 pub struct PapayaTable<K: 'static, H: 'static>(Arc<papaya::HashMap<K, Value, H>>);

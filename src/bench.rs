@@ -26,7 +26,7 @@ fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
 pub struct Options {
     #[structopt(short, long)]
     pub workload: workloads::WorkloadKind,
-    #[structopt(short, long, default_value = "1")]
+    #[structopt(short, long, default_value = "48")]
     pub operations: f64,
     #[structopt(long)]
     pub threads: Option<Vec<u32>>,
@@ -92,11 +92,6 @@ where
 }
 
 fn run(options: &Options, h: &mut Handler) {
-    //case::<StdRwLockBTreeMapTable<u64>>("std:sync::RwLock<BTreeMap>", options, h);
-    case::<ParkingLotRwLockBTreeMapTable<u64>>("parking_lot::RwLock<BTreeMap>", options, h);
-    //case::<CHashMapTable<u64>>("CHashMap", options, h);
-    case::<CrossbeamSkipMapTable<u64>>("CrossbeamSkipMap", options, h);
-
     match options.hasher {
         HasherKind::Std => run_hasher_variant::<RandomState>(options, h),
         HasherKind::FoldHash => run_hasher_variant::<foldhash::fast::RandomState>(options, h),
@@ -107,15 +102,14 @@ fn run_hasher_variant<H>(options: &Options, h: &mut Handler)
 where
     H: Default + Clone + Send + Sync + BuildHasher + 'static,
 {
-    //case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
-    case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
-    case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
+    //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
+    //case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
     case::<PapayaTable<u64, H>>("Papaya", options, h);
-    case::<PinnedPapayaTable<u64, H>>("Papaya refresh-every-8", options, h);
-    case::<FlurryTable<u64, H>>("Flurry", options, h);
-    case::<EvmapTable<u64, H>>("Evmap", options, h);
-    case::<ContrieTable<u64, H>>("Contrie", options, h);
-    case::<SccMapTable<u64, H>>("SccMap", options, h);
+    //case::<PinnedPapayaTable<u64, H>>("Papaya reuse-guard-8x", options, h);
+    //case::<FlurryTable<u64, H>>("Flurry", options, h);
+    //case::<EvmapTable<u64, H>>("Evmap", options, h);
+    //case::<ContrieTable<u64, H>>("Contrie", options, h);
+    //case::<SccMapTable<u64, H>>("SccMap", options, h);
 }
 
 pub fn bench(options: &Options) {
