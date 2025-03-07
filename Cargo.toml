@@ -27,6 +27,7 @@ plotters = "0.3.7"
 scc = "2.3.3"
 papaya = "0.2.0"
 foldhash = "0.1.4"
+mimalloc = "0.1.43"
 
 [profile.release]
 codegen-units = 1
