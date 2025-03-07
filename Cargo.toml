@@ -12,12 +12,12 @@ num_cpus = "1.16.0"
 ahash = "0.8.11"
 chashmap = "2.2.2"
 contrie = "0.1.4"
-flurry = "0.4.0"
+#flurry = "0.4.0"
 dashmap = { version = "7.0.0-rc2", features = ["inline-more"] }
 crossbeam-epoch = { version = "0.9.18", package = "crossbeam-epoch" }
 parking_lot = "0.12.3"
 evmap = "10.0.2"
-seize = "0.2.5"
+seize = "0.5.0"
 crossbeam-skiplist = { git = "https://github.com/crossbeam-rs/crossbeam" }
 structopt = "0.3.26"
 json = "0.12.4"
@@ -28,6 +28,10 @@ scc = "2.3.3"
 papaya = "0.2.0"
 foldhash = "0.1.4"
 mimalloc = "0.1.43"
+
+[patch.crates-io]
+seize = { git = "https://github.com/xacrimon/seize.git", branch = "assorted-improvements-0.5" }
+pathfinder_simd = { git = "https://github.com/theoparis/pathfinder.git" }
 
 [profile.release]
 codegen-units = 1

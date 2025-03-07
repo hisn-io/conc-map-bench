@@ -20,11 +20,11 @@ where
         let map = papaya::HashMap::builder()
             .capacity(capacity)
             .hasher(H::default())
-            //.collector(
-            //    papaya::Collector::new()
-            //        .epoch_frequency(None)
-            //        .batch_size(BATCH_SIZE),
-            //)
+            .collector(
+                seize::Collector::new()
+                    //.epoch_frequency(None)
+                    .batch_size(BATCH_SIZE),
+            )
             .build();
 
         Self(Arc::new(map))
