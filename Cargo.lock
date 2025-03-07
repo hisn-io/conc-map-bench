@@ -9,6 +9,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "512761e0bb2578dd7380c6baaa0f4ce03e84f95e960231d1dec8bf4d7d6e2627"
 
 [[package]]
+name = "ahash"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "891477e0c6a8957309ee5c45a6368af3ae14bb510732d2684ffa19af310920f9"
+dependencies = [
+ "getrandom",
+ "once_cell",
+ "version_check",
+]
+
+[[package]]
 name = "android-tzdata"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -183,6 +194,7 @@ dependencies = [
  "csv",
  "dashmap",
  "evmap",
+ "flurry",
  "foldhash",
  "json",
  "mimalloc",
@@ -191,7 +203,7 @@ dependencies = [
  "parking_lot 0.12.3",
  "plotters",
  "scc",
- "seize",
+ "seize 0.5.0",
  "serde",
  "structopt",
  "tracing-subscriber",
@@ -452,6 +464,18 @@ name = "float-ord"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8ce81f49ae8a0482e4c55ea62ebbd7e5a686af544c00b9d090bba3ff9be97b3d"
+
+[[package]]
+name = "flurry"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3e0afc943ef18eebf6bc3335daeb8d338202093d18444a1784ea7f57fe7680f8"
+dependencies = [
+ "ahash",
+ "num_cpus",
+ "parking_lot 0.12.3",
+ "seize 0.2.5",
+]
 
 [[package]]
 name = "foldhash"
@@ -817,7 +841,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aab21828b6b5952fdadd6c377728ffae53ec3a21b2febc47319ab65741f7e2fd"
 dependencies = [
  "equivalent",
- "seize",
+ "seize 0.5.0",
 ]
 
 [[package]]
@@ -1142,6 +1166,16 @@ name = "sdd"
 version = "3.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b07779b9b918cc05650cb30f404d4d7835d26df37c235eded8a6832e2fb82cca"
+
+[[package]]
+name = "seize"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0e5739de653b129b0a59da381599cf17caf24bc586f6a797c52d3d6147c5b85a"
+dependencies = [
+ "num_cpus",
+ "once_cell",
+]
 
 [[package]]
 name = "seize"

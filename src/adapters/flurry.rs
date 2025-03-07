@@ -1,5 +1,4 @@
 use bustle::*;
-use seize::Collector;
 use std::hash::{BuildHasher, Hash};
 use std::sync::Arc;
 
@@ -18,13 +17,10 @@ where
     type Handle = Self;
 
     fn with_capacity(capacity: usize) -> Self {
-        Self(Arc::new(
-            flurry::HashMap::with_capacity_and_hasher(capacity, H::default()).with_collector(
-                Collector::new()
-                    .epoch_frequency(None)
-                    .batch_size(BATCH_SIZE),
-            ),
-        ))
+        Self(Arc::new(flurry::HashMap::with_capacity_and_hasher(
+            capacity,
+            H::default(),
+        )))
     }
 
     fn pin(&self) -> Self::Handle {
