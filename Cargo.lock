@@ -1146,7 +1146,7 @@ checksum = "b07779b9b918cc05650cb30f404d4d7835d26df37c235eded8a6832e2fb82cca"
 [[package]]
 name = "seize"
 version = "0.5.0"
-source = "git+https://github.com/xacrimon/seize.git?branch=assorted-improvements-0.5#f022cce5e94677c438bce600de3418ab59ee78fd"
+source = "git+https://github.com/xacrimon/seize.git?branch=assorted-improvements-0.5#fcf7143282528d0b059838701f5c92a9938ef5a5"
 dependencies = [
  "cc",
  "libc",

@@ -16,4 +16,4 @@ function plot {
 #plot RapidGrow.std
 plot ReadHeavy.foldhash
 plot Exchange.foldhash
-#plot RapidGrow.foldhash
+plot RapidGrow.foldhash

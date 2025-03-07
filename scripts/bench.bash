@@ -18,8 +18,6 @@ function bench {
         ARGS+=" --csv-no-headers"
     fi
 
-    ARGS+=" --max-threads 10"
-
     skip=$(cat "$file" | cut -d, -f1 | uniq | paste -sd ' ' -)
 
     if ! "$BIN" bench -w $1 -h $2 $ARGS --skip $skip --csv 2>>"$file"; then
@@ -33,6 +31,6 @@ function bench {
 
 bench ReadHeavy foldhash
 bench Exchange foldhash
-#bench RapidGrow foldhash
+bench RapidGrow foldhash
 
 date

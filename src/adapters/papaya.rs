@@ -102,7 +102,7 @@ impl<K, H> PinnedPapayaHandle<K, H> {
     fn refresh(&mut self) {
         if self.repin_after == 0 {
             self.guard.refresh();
-            self.repin_after = 32;
+            self.repin_after = 4;
         } else {
             self.repin_after -= 1;
         }
@@ -117,22 +117,26 @@ where
     type Key = K;
 
     fn get(&mut self, key: &Self::Key) -> bool {
+        let out = self.map.get(key, &self.guard).is_some();
         self.refresh();
-        self.map.get(key, &self.guard).is_some()
+        out
     }
 
     fn insert(&mut self, key: &Self::Key) -> bool {
+        let out = self.map.insert(*key, 0, &self.guard).is_none();
         self.refresh();
-        self.map.insert(*key, 0, &self.guard).is_none()
+        out
     }
 
     fn remove(&mut self, key: &Self::Key) -> bool {
+        let out = self.map.remove(key, &self.guard).is_some();
         self.refresh();
-        self.map.remove(key, &self.guard).is_some()
+        out
     }
 
     fn update(&mut self, key: &Self::Key) -> bool {
+        let out = self.map.update(*key, |v| v + 1, &self.guard).is_some();
         self.refresh();
-        self.map.update(*key, |v| v + 1, &self.guard).is_some()
+        out
     }
 }

@@ -26,7 +26,7 @@ fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
 pub struct Options {
     #[structopt(short, long)]
     pub workload: workloads::WorkloadKind,
-    #[structopt(short, long, default_value = "5")]
+    #[structopt(short, long, default_value = "1")]
     pub operations: f64,
     #[structopt(long)]
     pub threads: Option<Vec<u32>>,
@@ -123,11 +123,11 @@ where
     //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
     case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
     case::<PapayaTable<u64, H>>("Papaya", options, h);
-    case::<PinnedPapayaTable<u64, H>>("Papaya refresh-every-32", options, h);
+    case::<PinnedPapayaTable<u64, H>>("Papaya refresh-every-4", options, h);
     //case::<FlurryTable<u64, H>>("Flurry", options, h);
     //case::<EvmapTable<u64, H>>("Evmap", options, h);
     //case::<ContrieTable<u64, H>>("Contrie", options, h);
-    //case::<SccMapTable<u64, H>>("SccMap", options, h);
+    case::<SccMapTable<u64, H>>("SccMap", options, h);
 }
 
 pub fn bench(options: &Options) {
