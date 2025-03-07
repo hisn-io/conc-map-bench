@@ -102,7 +102,7 @@ impl<K, H> PinnedPapayaHandle<K, H> {
     fn refresh(&mut self) {
         if self.repin_after == 0 {
             self.guard.refresh();
-            self.repin_after = 4;
+            self.repin_after = 8;
         } else {
             self.repin_after -= 1;
         }
