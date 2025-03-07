@@ -40,6 +40,8 @@ pub struct Options {
     pub csv_no_headers: bool,
     #[structopt(long)]
     pub max_threads: Option<usize>,
+    #[structopt(long)]
+    pub adapter: Option<String>,
 }
 
 type Handler = Box<dyn FnMut(&str, u32, &Measurement)>;
@@ -49,6 +51,10 @@ where
     C: Collection,
     <C::Handle as CollectionHandle>::Key: Send + Debug,
 {
+    if options.adapter.is_some() && options.adapter.as_deref() != Some(name) {
+        return;
+    }
+
     if options
         .skip
         .as_ref()
@@ -103,7 +109,7 @@ where
     H: Default + Clone + Send + Sync + BuildHasher + 'static,
 {
     case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
-    case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
+    case::<DashMapTable<u64, H>>("DashMap", options, h);
     case::<PapayaTable<u64, H>>("Papaya", options, h);
     case::<FlurryTable<u64, H>>("Flurry", options, h);
     case::<EvmapTable<u64, H>>("Evmap", options, h);
