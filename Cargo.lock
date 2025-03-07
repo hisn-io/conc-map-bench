@@ -1180,6 +1180,7 @@ dependencies = [
 [[package]]
 name = "seize"
 version = "0.5.0"
+source = "git+https://github.com/xacrimon/seize.git?branch=assorted-improvements-0.5#e6de3257a5074b2a0a55f5295869120f0f05c239"
 dependencies = [
  "libc",
  "windows-sys 0.59.0",

@@ -29,7 +29,7 @@ foldhash = "0.1.4"
 mimalloc = "0.1.43"
 
 [patch.crates-io]
-seize = { path = "../seize" }
+seize = { git = "https://github.com/xacrimon/seize.git", branch = "assorted-improvements-0.5" }
 pathfinder_simd = { git = "https://github.com/theoparis/pathfinder.git" }
 
 [profile.release]
