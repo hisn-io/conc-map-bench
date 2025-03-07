@@ -2,8 +2,8 @@
 
 pub use self::{
     contrie::ContrieTable, dashmap::DashMapTable, evmap::EvmapTable, flurry::FlurryTable,
-    papaya::PapayaTable, scc::SccMapTable, std::ParkingLotRwLockStdHashMapTable,
-    std::StdRwLockStdHashMapTable,
+    papaya::PapayaTable, scc::SccIndexTable, scc::SccMapTable,
+    std::ParkingLotRwLockStdHashMapTable, std::StdRwLockStdHashMapTable,
 };
 
 mod contrie;
