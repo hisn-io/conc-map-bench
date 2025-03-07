@@ -11,14 +11,14 @@ use crate::{adapters::*, record::Record, workloads};
 #[derive(Debug)]
 pub enum HasherKind {
     Std,
-    AHash,
+    FoldHash,
 }
 
 fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
     match hasher {
         "std" => Ok(HasherKind::Std),
-        "ahash" => Ok(HasherKind::AHash),
-        _ => Err("invalid hasher, must be one of 'std' or 'ahash'"),
+        "foldhash" => Ok(HasherKind::FoldHash),
+        _ => Err("invalid hasher, must be one of 'std' or 'foldhash'"),
     }
 }
 
@@ -26,7 +26,7 @@ fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
 pub struct Options {
     #[structopt(short, long)]
     pub workload: workloads::WorkloadKind,
-    #[structopt(short, long, default_value = "1")]
+    #[structopt(short, long, default_value = "5")]
     pub operations: f64,
     #[structopt(long)]
     pub threads: Option<Vec<u32>>,
@@ -111,7 +111,7 @@ fn run(options: &Options, h: &mut Handler) {
 
     match options.hasher {
         HasherKind::Std => run_hasher_variant::<RandomState>(options, h),
-        HasherKind::AHash => run_hasher_variant::<foldhash::fast::RandomState>(options, h),
+        HasherKind::FoldHash => run_hasher_variant::<foldhash::fast::RandomState>(options, h),
     }
 }
 
@@ -121,7 +121,7 @@ where
 {
     //case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
     //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
-    //case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
+    case::<DashMapTable<u64, H>>("DashMap 7.0.0-rc2", options, h);
     case::<PapayaTable<u64, H>>("Papaya", options, h);
     case::<PinnedPapayaTable<u64, H>>("Papaya refresh-every-32", options, h);
     //case::<FlurryTable<u64, H>>("Flurry", options, h);

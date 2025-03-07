@@ -9,19 +9,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "512761e0bb2578dd7380c6baaa0f4ce03e84f95e960231d1dec8bf4d7d6e2627"
 
 [[package]]
-name = "ahash"
-version = "0.8.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011"
-dependencies = [
- "cfg-if 1.0.0",
- "getrandom",
- "once_cell",
- "version_check",
- "zerocopy",
-]
-
-[[package]]
 name = "android-tzdata"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -188,7 +175,6 @@ checksum = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 name = "conc-map-bench"
 version = "0.1.0"
 dependencies = [
- "ahash",
  "bustle",
  "chashmap",
  "contrie",
@@ -1160,7 +1146,7 @@ checksum = "b07779b9b918cc05650cb30f404d4d7835d26df37c235eded8a6832e2fb82cca"
 [[package]]
 name = "seize"
 version = "0.5.0"
-source = "git+https://github.com/xacrimon/seize.git?branch=assorted-improvements-0.5#89a7a3c74895de1bf26b34e08f7ce726e779b5b1"
+source = "git+https://github.com/xacrimon/seize.git?branch=assorted-improvements-0.5#f022cce5e94677c438bce600de3418ab59ee78fd"
 dependencies = [
  "cc",
  "libc",
