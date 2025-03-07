@@ -26,7 +26,7 @@ fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
 pub struct Options {
     #[structopt(short, long)]
     pub workload: workloads::WorkloadKind,
-    #[structopt(short, long, default_value = "48")]
+    #[structopt(short, long, default_value = "16")]
     pub operations: f64,
     #[structopt(long)]
     pub threads: Option<Vec<u32>>,
