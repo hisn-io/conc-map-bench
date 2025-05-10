@@ -1,5 +1,5 @@
 use bustle::*;
-use seize_old::Collector;
+use seize::Collector;
 use std::hash::{BuildHasher, Hash};
 use std::sync::Arc;
 
@@ -8,9 +8,9 @@ use super::Value;
 const BATCH_SIZE: usize = 2000;
 
 #[derive(Clone)]
-pub struct FlurryTable<K: 'static, H: 'static>(Arc<flurry::HashMap<K, Value, H>>);
+pub struct PapayaTable<K: 'static, H: 'static>(Arc<papaya::HashMap<K, Value, H>>);
 
-impl<K, H> Collection for FlurryTable<K, H>
+impl<K, H> Collection for PapayaTable<K, H>
 where
     K: Send + Sync + From<u64> + Copy + 'static + Hash + Ord,
     H: BuildHasher + Default + Send + Sync + 'static + Clone,
@@ -18,13 +18,13 @@ where
     type Handle = Self;
 
     fn with_capacity(capacity: usize) -> Self {
-        Self(Arc::new(
-            flurry::HashMap::with_capacity_and_hasher(capacity, H::default()).with_collector(
-                Collector::new()
-                    .epoch_frequency(None)
-                    .batch_size(BATCH_SIZE),
-            ),
-        ))
+        let map = papaya::HashMap::builder()
+            .capacity(capacity)
+            .hasher(H::default())
+            .collector(Collector::new().batch_size(BATCH_SIZE))
+            .build();
+
+        Self(Arc::new(map))
     }
 
     fn pin(&self) -> Self::Handle {
@@ -32,7 +32,7 @@ where
     }
 }
 
-impl<K, H> CollectionHandle for FlurryTable<K, H>
+impl<K, H> CollectionHandle for PapayaTable<K, H>
 where
     K: Send + Sync + From<u64> + Copy + 'static + Hash + Ord,
     H: BuildHasher + Default + Send + Sync + 'static + Clone,
@@ -52,9 +52,6 @@ where
     }
 
     fn update(&mut self, key: &Self::Key) -> bool {
-        self.0
-            .pin()
-            .compute_if_present(key, |_, v| Some(v + 1))
-            .is_some()
+        self.0.pin().update(*key, |v| v + 1).is_some()
     }
 }
