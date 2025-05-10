@@ -25,6 +25,10 @@ function bench {
     fi
 }
 
+bench ReadHeavy hashless
+bench Exchange hashless
+bench RapidGrow hashless
+
 bench ReadHeavy std
 bench Exchange std
 bench RapidGrow std

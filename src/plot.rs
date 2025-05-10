@@ -50,7 +50,18 @@ fn group_data(records: Vec<Record>) -> Groups {
     groups
 }
 
-static COLORS: &[RGBColor] = &[BLUE, RED, GREEN, MAGENTA, CYAN, BLACK, YELLOW];
+static COLORS: &[RGBColor] = &[
+    BLUE,
+    RED,
+    GREEN,
+    MAGENTA,
+    CYAN,
+    BLACK,
+    YELLOW,
+    full_palette::ORANGE,
+    full_palette::PURPLE,
+    full_palette::BLUEGREY,
+];
 
 fn plot_throughput(options: &Options, groups: &Groups) -> Result<(), Box<dyn Error>> {
     let path = format!("{}/{}.throughput.svg", options.dir.display(), options.name);
@@ -83,7 +94,7 @@ fn plot_throughput(options: &Options, groups: &Groups) -> Result<(), Box<dyn Err
         .x_desc("Threads")
         .draw()?;
 
-    let colors = COLORS.iter().cycle();
+    let colors = COLORS.iter();
 
     for (records, color) in groups.values().zip(colors) {
         chart
