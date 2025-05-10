@@ -43,7 +43,7 @@ fn group_data(records: Vec<Record>) -> Groups {
     let mut groups = Groups::new();
 
     for record in records {
-        let group = groups.entry(record.name.clone()).or_insert_with(Vec::new);
+        let group = groups.entry(record.name.clone()).or_default();
         group.push(record);
     }
 
@@ -67,7 +67,7 @@ fn plot_throughput(options: &Options, groups: &Groups) -> Result<(), Box<dyn Err
 
     let mut chart = ChartBuilder::on(&root)
         .margin(10)
-        .caption(&format!("{}: Throughput", options.name), (FONT, 20))
+        .caption(format!("{}: Throughput", options.name), (FONT, 20))
         .set_label_area_size(LabelAreaPosition::Left, 70)
         .set_label_area_size(LabelAreaPosition::Right, 70)
         .set_label_area_size(LabelAreaPosition::Bottom, 40)
@@ -127,7 +127,7 @@ fn plot_latency(options: &Options, groups: &Groups) -> Result<(), Box<dyn Error>
 
     let mut chart = ChartBuilder::on(&root)
         .margin(10)
-        .caption(&format!("{}: Latency", options.name), (FONT, 20))
+        .caption(format!("{}: Latency", options.name), (FONT, 20))
         .set_label_area_size(LabelAreaPosition::Left, 70)
         .set_label_area_size(LabelAreaPosition::Right, 70)
         .set_label_area_size(LabelAreaPosition::Bottom, 40)

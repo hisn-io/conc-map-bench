@@ -12,13 +12,17 @@ use crate::{adapters::*, record::Record, workloads};
 pub enum HasherKind {
     Std,
     AHash,
+    FxHash,
+    FoldHash,
 }
 
 fn parse_hasher_kind(hasher: &str) -> Result<HasherKind, &str> {
     match hasher {
         "std" => Ok(HasherKind::Std),
         "ahash" => Ok(HasherKind::AHash),
-        _ => Err("invalid hasher, must be one of 'std' or 'ahash'"),
+        "fxhash" => Ok(HasherKind::FxHash),
+        "foldhash" => Ok(HasherKind::FoldHash),
+        _ => Err("invalid hasher, must be one of 'std' or 'ahash' or 'fxhash' or 'foldhash'"),
     }
 }
 
@@ -99,14 +103,16 @@ where
 }
 
 fn run(options: &Options, h: &mut Handler) {
-    //case::<StdRwLockBTreeMapTable<u64>>("std:sync::RwLock<BTreeMap>", options, h);
-    //case::<ParkingLotRwLockBTreeMapTable<u64>>("parking_lot::RwLock<BTreeMap>", options, h);
+    case::<StdRwLockBTreeMapTable<u64>>("std:sync::RwLock<BTreeMap>", options, h);
+    case::<ParkingLotRwLockBTreeMapTable<u64>>("parking_lot::RwLock<BTreeMap>", options, h);
     case::<CHashMapTable<u64>>("CHashMap", options, h);
     case::<CrossbeamSkipMapTable<u64>>("CrossbeamSkipMap", options, h);
 
     match options.hasher {
         HasherKind::Std => run_hasher_variant::<RandomState>(options, h),
         HasherKind::AHash => run_hasher_variant::<ahash::RandomState>(options, h),
+        HasherKind::FxHash => run_hasher_variant::<rustc_hash::FxBuildHasher>(options, h),
+        HasherKind::FoldHash => run_hasher_variant::<foldhash::fast::RandomState>(options, h),
     }
 }
 
@@ -114,8 +120,8 @@ fn run_hasher_variant<H>(options: &Options, h: &mut Handler)
 where
     H: Default + Clone + Send + Sync + BuildHasher + 'static,
 {
-    //case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
-    //case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
+    case::<StdRwLockStdHashMapTable<u64, H>>("std::sync::RwLock<StdHashMap>", options, h);
+    case::<ParkingLotRwLockStdHashMapTable<u64, H>>("parking_lot::RwLock<StdHashMap>", options, h);
     case::<DashMapTable<u64, H>>("DashMap", options, h);
     case::<FlurryTable<u64, H>>("Flurry", options, h);
     case::<EvmapTable<u64, H>>("Evmap", options, h);

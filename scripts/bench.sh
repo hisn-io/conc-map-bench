@@ -33,4 +33,12 @@ bench ReadHeavy ahash
 bench Exchange ahash
 bench RapidGrow ahash
 
+bench ReadHeavy fxhash
+bench Exchange fxhash
+bench RapidGrow fxhash
+
+bench ReadHeavy foldhash
+bench Exchange foldhash
+bench RapidGrow foldhash
+
 date

@@ -41,8 +41,8 @@ update 10%
 
 ```sh
 mv results results.bk
-./scripts/bench.bash
-./scripts/plot.bash
+./scripts/bench.sh
+./scripts/plot.sh
 ```
 
 ## Results
@@ -82,3 +82,33 @@ See the `results/` directory.
 | | |
 :-------------------------:|:-------------------------:
 ![](results/RapidGrow.ahash.throughput.svg) | ![](results/RapidGrow.ahash.latency.svg)
+
+## Rapid Grow (fxhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/RapidGrow.fxhash.throughput.svg) | ![](results/RapidGrow.fxhash.latency.svg)
+
+### Read Heavy (fxhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/ReadHeavy.fxhash.throughput.svg) | ![](results/ReadHeavy.fxhash.latency.svg)
+
+### Exchange (fxhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/Exchange.fxhash.throughput.svg) | ![](results/Exchange.fxhash.latency.svg)
+
+## Rapid Grow (foldhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/RapidGrow.foldhash.throughput.svg) | ![](results/RapidGrow.foldhash.latency.svg)
+
+### Read Heavy (foldhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/ReadHeavy.foldhash.throughput.svg) | ![](results/ReadHeavy.foldhash.latency.svg)
+
+### Exchange (foldhash)
+| | |
+:-------------------------:|:-------------------------:
+![](results/Exchange.foldhash.throughput.svg) | ![](results/Exchange.foldhash.latency.svg)
